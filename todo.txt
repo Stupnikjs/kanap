@@ -1,0 +1,4 @@
+creer tout les element du commentaire html de cart.html dans le cart.js 
+utiliser localStorage.removeItem()
+gerer les quantité dans le panier 
+push sur git 

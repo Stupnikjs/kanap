@@ -20,24 +20,24 @@ const description = descriptionDiv.querySelector("#description")
 const item__content__settings = document.querySelector(item__content__ + "settings")
 const selectColor = item__content__settings.querySelector("#colors")
 
+const quantity = document.querySelector("#quantity")
+
 const addToCart = document.querySelector("#addToCart")
 
-const checkLocalStorage = (storage) => {
-   return window.localStorage.getItem(storage)
-}
+
+
 
 // au click ajoute l'objet qui represente le canapé au localstorage
-const addListener = (object) => {
 
-   addToCart.addEventListener("click", () => {
-
-      if (checkLocalStorage("Cart") === null) window.localStorage.setItem("Cart", object )
-      // if (checkLocalStorage("Cart") != null) window.localStorage.setItem("Cart", [...checkLocalStorage("Cart"), object] )
-   
-   console.log(window.localStorage.getItem("Cart").colors)
+const mapOptions = (select, arrayColor) => {
+   arrayColor.map( elmt => {
+      let option = document.createElement("option")
+      option.setAttribute("value", elmt)
+      option.innerHTML = elmt;  
+      select.appendChild(option)  
    })
 }
-
+ 
 
 
 fetch(`http://127.0.0.1:3000/api/products/${id}`)
@@ -48,16 +48,20 @@ fetch(`http://127.0.0.1:3000/api/products/${id}`)
        span__titlePrice.innerHTML = data.price 
        description.innerHTML = data.description
        item__img.setAttribute("src", data.imageUrl)
-
-       data.colors.map( elmt => {
-         let option = document.createElement("option")
-         option.setAttribute("value", elmt)
-         option.innerHTML = elmt;  
-         selectColor.appendChild(option)
-         console.log(selectColor)
-
-         addListener(data)
+      
+       mapOptions(selectColor, data.colors)
+       
+      addToCart.addEventListener("click", () => {
+         let id_store = localStorage.getItem(data._id)
+         let input_count = parseInt(quantity.value) 
+        
+         item = input_count.toString() + " " + selectColor.selectedIndex
+         localStorage.setItem(data._id, item )
       })
     })
    
 
+    setInterval(()=> {
+      console.log(localStorage.length)
+      console.log(localStorage)
+    }, 5000)

@@ -52,14 +52,21 @@ fetch(`http://127.0.0.1:3000/api/products/${id}`)
        mapOptions(selectColor, data.colors)
        
       addToCart.addEventListener("click", () => {
-         let id_store = localStorage.getItem(data._id)
-         let input_count = parseInt(quantity.value) 
+
+         let id_store = localStorage.getItem(selectColor.selectedIndex + data._id)
+         let count = 0
+         if (id_store != null ) count = parseInt(id_store)
+         
+         count += parseInt(quantity.value)
         
-         item = input_count.toString() + " " + selectColor.selectedIndex
-         localStorage.setItem(data._id, item )
+         localStorage.setItem(selectColor.selectedIndex + data._id, count )
+         
+         location.href ="http://127.0.0.1:5500/front/html/cart.html"
+        
       })
     })
-   
+
+    
 
     setInterval(()=> {
       console.log(localStorage.length)

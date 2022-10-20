@@ -1,4 +1,25 @@
-creer tout les element du commentaire html de cart.html dans le cart.js 
-utiliser localStorage.removeItem()
-gerer les quantité dans le panier 
-push sur git 
+- trier les elements par modele et couleur
+- verifier alt dans img 
+
+     /* 
+        const articles = document.querySelectorAll("article")
+        const arrayArticles = Array.from(articles)
+        let totQuantity = 0;  
+        let totPrice = 0; 
+
+        arrayArticles.map(element => {
+         
+         let cart__item__content__description = element.querySelector(".cart__item__content__description")
+         console.log(cart__item__content__description)
+         let price = parseInt(cart__item__content__description.querySelector("p").textContent.split(" ")[0])
+         console.log(cart__item__content__description.querySelector("p"))
+         let quantity = parseInt(element.querySelector(".itemQuantity").value)
+         console.log(parseInt(element.querySelector(".itemQuantity").value))
+         totPrice += price
+         totQuantity += quantity
+        })
+        totalQuantity.innerHTML = totQuantity
+        totalPrice.innerHTML = totPrice
+     * pas besoin de supprimer uniquement l'élement à supprimer du panier puisque la fonction renderProducts() est rappelé pour mettre a jour les totaux 
+     * problème : nouveau fetch a chaque suppression d'article du panier 
+     */

@@ -10,6 +10,23 @@ const totalQuantity = document.querySelector("#totalQuantity")
 const totalPrice = document.querySelector("#totalPrice")
 const storage = localStorage
 
+
+function updateTotal(deletedElement){
+
+    let price = deletedElement.getAttribute("price") 
+    let quantity = deletedElement.querySelector(".itemQuantity").value
+    let priceBefore = parseInt(totalPrice.innerHTML)
+    let quantityBefore = parseInt(totalQuantity.innerHTML) 
+    totalPrice.innerHTML =  priceBefore - (parseInt(price) * parseInt(quantity))
+    totalQuantity.innerHTML = quantityBefore - parseInt(quantity)
+    
+}
+
+
+
+
+
+
 const createDiv_img = (product) => {
     const div_img = document.createElement("div")
     div_img.classList.add("cart__item__img")
@@ -66,9 +83,15 @@ const createSettingsDelete = (article, color__index) => {
     pDelete.innerHTML = "Supprimer"
 
     pDelete.addEventListener("click", () => {
-        localStorage.removeItem(color__index + article.getAttribute("data-id"))
-        section.removeChild(article)
-        renderProducts()
+        console.log(`createSettingsDelete ${color__index}`)
+        
+      localStorage.removeItem(color__index + article.getAttribute("data-id"))
+        
+      section.removeChild(article)
+      updateTotal(article)
+
+
+
     })
     settingsDelete.appendChild(pDelete)
     return settingsDelete
@@ -83,7 +106,7 @@ const createCartItemContentSettings = (article, product, color__index, storage) 
     
     const quantity = createSettingsQuantity(product, color__index, storage)
     settings.appendChild(quantity)
-
+    console.log(`createCartItemContentSettings ${color__index}`)
     const deleteSettings = createSettingsDelete(article, color__index)
     settings.appendChild(deleteSettings)
 
@@ -224,5 +247,5 @@ async function renderProducts(){
  
 
 
-
+console.log(localStorage)
 renderProducts()

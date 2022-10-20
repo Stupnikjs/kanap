@@ -18,6 +18,7 @@ function createLink(object){
     let link = document.createElement("a")
     link.setAttribute("href", productTemplateUrl + `?id=${object._id}`)          
     link.setAttribute("id", object._id) 
+    return link
 }
 
 // create an article element with img / h3 / p as child 

@@ -74,7 +74,7 @@
               <p>Total (<span id="totalQuantity"><!-- 2 --></span> articles) : <span id="totalPrice"><!-- 84,00 --></span> €</p>
             </div>
             <div class="cart__order">
-              <form method="post" action="http://localhost:3000/api/products/order" class="cart__order__form" onsubmit="return onSubmit() " >
+              <form class="cart__order__form" onsubmit="return false">
                 <div class="cart__order__form__question">
                   <label for="firstName">Prénom: </label>
                   <input type="text" name="firstName" id="firstName" required>
@@ -101,8 +101,7 @@
                   <p id="emailErrorMsg"></p>
                 </div>
                 <div class="cart__order__form__submit">
-                  <input type="submit" value="Commander !" id="order">
-                 
+                 <input type="submit" value="Commander !" id="order"> 
                 </div>
               </form>
             </div>

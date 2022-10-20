@@ -54,22 +54,48 @@ function checkEmail(){
 }
 
 function onSubmit(){
+  
   return [checkName(), checkAddress(), checkEmail(), checkCity()].every(element => element === true)
 }
 
-submitButton.addEventListener("submit", () => {
+
+submitButton.addEventListener("click", () => {
   checkName()
   checkAddress()
   checkCity()
   checkEmail()
+ 
+  let data = getData()
+  let response = postData("http://localhost:3000/api/products/order", data)
+  response
+  .then( window.localStorage.clear())
+  .then( data => 
+    window.location.href = `http://127.0.0.1:5500/front/html/confirmation.html?orderId=${data.orderId}`)
+      }
+ )
 
-})
 
-let xhr = new XMLHttpRequest();
-xhr.open("POST", "http://localhost:3000/api/products/order/");
 
-xhr.setRequestHeader("Accept", "application/json");
-xhr.setRequestHeader("Content-Type", "application/json");
+
+async function postData(url = '', data) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: data // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
+
 
 /**
  *
@@ -84,8 +110,8 @@ xhr.setRequestHeader("Content-Type", "application/json");
  * products: [string] <-- array of product _id
  *
  */
-
-let data = {
+function getData(){
+  let data = {
     contact: {
       firstName : firstNameInput.value, 
       lastName: lastNameInput.value, 
@@ -93,11 +119,23 @@ let data = {
       city: cityInput.value, 
       email : emailInput.value
     }, 
-    products : [getAllProductId] 
+    products : getAllProductId()
 
 };
+console.log(data)
+return JSON.stringify(data)
 
-xhr.send(data);
+}
+
+function getAllProductId(){
+  let products = document.querySelectorAll("article")
+  let productsArray = Array.from(products)
+  let productIDs = productsArray.map( element => {return element.getAttribute("data-id")})
+  console.log(productIDs)
+  return productIDs
+}
+
+
 
 
 
